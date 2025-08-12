@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SQL to Chart Visualizer</title>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <style>
+      body {
+        font-family: Arial;
+        padding: 20px;
+      }
+      #chartdiv {
+        width: 100%;
+        height: 500px;
+        margin-top: 30px;
+      }
+      .kpi-box {
+        font-size: 2em;
+        padding: 20px;
+        background: #f2f2f2;
+        text-align: center;
+        margin-top: 30px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>SQL to Chart Dashboard</h2>
+
+    <label>Chart Type:</label>
+    <select id="chartType">
+      <option value="bar">Bar Chart</option>
+      <option value="line">Line Chart</option>
+      <option value="pie">Pie Chart</option>
+      <option value="time">Time Chart</option>
+      <option value="kpi">KPI</option>
+    </select>
+
+    <label style="margin-left: 20px">X-axis Field:</label>
+    <select id="xField"></select>
+
+    <label style="margin-left: 20px">Y-axis Field:</label>
+    <select id="yField"></select>
+
+    <button onclick="generateChart()" style="margin-left: 20px">
+      Generate Chart
+    </button>
+
+    <div id="chartdiv"></div>
+    <div class="kpi-box" id="kpiBox"></div>
+
+    <script>
+      let rawData = [];
+
+      async function fetchSQLData() {
+        const res = await fetch("/run-query", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sql: "SELECT department, AVG(salary) as avg_salary FROM employees GROUP BY department",
+          }),
+        });
+        const json = await res.json();
+        rawData = json.data;
+
+        populateFieldDropdowns(rawData);
+      }
+
+      function populateFieldDropdowns(data) {
+        const keys = Object.keys(data[0] || {});
+        const xSelect = document.getElementById("xField");
+        const ySelect = document.getElementById("yField");
+
+        xSelect.innerHTML = "";
+        ySelect.innerHTML = "";
+
+        keys.forEach((k) => {
+          xSelect.innerHTML += `<option value="${k}">${k}</option>`;
+          ySelect.innerHTML += `<option value="${k}">${k}</option>`;
+        });
+      }
+
+      function formatData(type, xField, yField) {
+        switch (type) {
+          case "bar":
+          case "line":
+          case "pie":
+            return rawData.map((row) => ({
+              category: row[xField],
+              value: Number(row[yField]),
+            }));
+          case "time":
+            return rawData.map((row) => ({
+              date: new Date(row[xField]),
+              value: Number(row[yField]),
+            }));
+          case "kpi":
+            const total = rawData.reduce(
+              (sum, r) => sum + Number(r[yField]),
+              0
+            );
+            const avg = total / rawData.length;
+            return {
+              kpiName: yField,
+              value: avg.toFixed(2),
+              unit: "₹",
+            };
+        }
+      }
+
+      function clearChart() {
+        const chartDiv = document.getElementById("chartdiv");
+        chartDiv.innerHTML = "";
+        document.getElementById("kpiBox").style.display = "none";
+      }
+
+      function generateChart() {
+        const type = document.getElementById("chartType").value;
+        const xField = document.getElementById("xField").value;
+        const yField = document.getElementById("yField").value;
+        const data = formatData(type, xField, yField);
+        clearChart();
+
+        if (type === "kpi") {
+          document.getElementById("kpiBox").style.display = "block";
+          document.getElementById(
+            "kpiBox"
+          ).innerText = `${data.kpiName}: ${data.unit}${data.value}`;
+          return;
+        }
+
+        am5.ready(() => {
+          const root = am5.Root.new("chartdiv");
+          root.setThemes([am5themes_Animated.new(root)]);
+
+          let chart;
+          let xAxis, yAxis, series;
+
+          if (type === "pie") {
+            chart = root.container.children.push(
+              am5percent.PieChart.new(root, {})
+            );
+            const pieSeries = chart.series.push(
+              am5percent.PieSeries.new(root, {
+                valueField: "value",
+                categoryField: "category",
+              })
+            );
+            pieSeries.data.setAll(data);
+          } else {
+            chart = root.container.children.push(am5xy.XYChart.new(root, {}));
+            xAxis = chart.xAxes.push(
+              am5xy.CategoryAxis.new(root, {
+                categoryField: "category",
+                renderer: am5xy.AxisRendererX.new(root, {}),
+              })
+            );
+            yAxis = chart.yAxes.push(
+              am5xy.ValueAxis.new(root, {
+                renderer: am5xy.AxisRendererY.new(root, {}),
+              })
+            );
+
+            xAxis.data.setAll(data);
+
+            series = chart.series.push(
+              (type === "line" ? am5xy.LineSeries : am5xy.ColumnSeries).new(
+                root,
+                {
+                  name: "Series",
+                  xAxis: xAxis,
+                  yAxis: yAxis,
+                  valueYField: "value",
+                  categoryXField: "category",
+                }
+              )
+            );
+            series.data.setAll(data);
+          }
+        });
+      }
+
+      fetchSQLData();
+    </script>
+  </body>
+</html>
