@@ -1,0 +1,26 @@
+[
+  {
+    "category": "Chrome",
+    "value": 65.2
+  },
+  {
+    "category": "Safari",
+    "value": 18.9
+  },
+  {
+    "category": "Edge",
+    "value": 5.4
+  },
+  {
+    "category": "Firefox",
+    "value": 3.1
+  },
+  {
+    "category": "Samsung Internet",
+    "value": 2.8
+  },
+  {
+    "category": "Other",
+    "value": 4.6
+  }
+]

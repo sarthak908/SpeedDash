@@ -16,6 +16,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For form submissions
 app.use(express.static(path.join(__dirname, "../public"))); // Serve CSS/JS/images
+app.use("/visualisations", express.static(path.join(__dirname, "../visualisations")));
+
 
 // Routes
 app.use("/query", queryRoute);

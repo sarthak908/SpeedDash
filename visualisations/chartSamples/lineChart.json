@@ -1,0 +1,11 @@
+[
+  { "category": "Jan", "value": 45 },
+  { "category": "Feb", "value": 60 },
+  { "category": "Mar", "value": 50 },
+  { "category": "Apr", "value": 75 },
+  { "category": "May", "value": 90 },
+  { "category": "Jun", "value": 80 },
+  { "category": "Jul", "value": 95 },
+  { "category": "Aug", "value": 70 }
+  
+]
