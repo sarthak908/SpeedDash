@@ -1,20 +1,4 @@
-// File: /visualisations/amchartsHelper.js
-
-// EXPORT each function so it can be imported by chart.js
-// File: /visualisations/amchartsHelper.js
-
-// EXPORT each function so it can be imported by chart.js
-// File: /visualisations/amchartsHelper.js
-
-// EXPORT each function so it can be imported by chart.js
-// ------------------------------
-// BAR CHART
-// ------------------------------
-// This single file contains all the necessary logic.
-
-// File: amchartsHelper.js
-
-// EXPORT each function so it can be imported by chart.js
+//for bar chart
 export function createBarChart(root, data) {
   const chart = root.container.children.push(
     am5xy.XYChart.new(root, {
@@ -28,7 +12,7 @@ export function createBarChart(root, data) {
 
   // --- NEW: Create Cursor ---
   const cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
-//   cursor.lineY.set("visible", false);
+  //   cursor.lineY.set("visible", false);
 
   // Create Axes
   const xAxis = chart.xAxes.push(
@@ -51,7 +35,9 @@ export function createBarChart(root, data) {
       yAxis,
       valueYField: "value",
       categoryXField: "category",
-      tooltip: am5.Tooltip.new(root, { labelText: "{categoryX}: [bold]{valueY}[/]" }),
+      tooltip: am5.Tooltip.new(root, {
+        labelText: "{categoryX}: [bold]{valueY}[/]",
+      }),
     })
   );
   series.columns.template.setAll({ cornerRadiusTL: 5, cornerRadiusTR: 5 });
@@ -66,13 +52,16 @@ export function createBarChart(root, data) {
   });
 
   // --- NEW: Add Scrollbar ---
-  chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
+  chart.set(
+    "scrollbarX",
+    am5.Scrollbar.new(root, { orientation: "horizontal" })
+  );
 
   // Set Data
   xAxis.data.setAll(data);
   series.data.setAll(data);
-  series.appear(1000);
-  chart.appear(1000, 100);
+  series.appear(500);
+  chart.appear(500, 100);
 }
 
 export function createLineChart(root, data) {
@@ -86,7 +75,12 @@ export function createLineChart(root, data) {
       pinchZoomX: true,
     })
   );
-
+  chart.set(
+    "scrollbarX",
+    am5.Scrollbar.new(root, {
+      orientation: "horizontal",
+    })
+  );
   // Create X Axis
   const xAxis = chart.xAxes.push(
     am5xy.CategoryAxis.new(root, {
@@ -111,7 +105,7 @@ export function createLineChart(root, data) {
       xAxis: xAxis,
     })
   );
-//   cursor.lineY.set("visible", false);
+  //   cursor.lineY.set("visible", false);
 
   // Create Line Series
   const series = chart.series.push(
@@ -161,7 +155,6 @@ export function createLineChart(root, data) {
   series.appear(1000);
   chart.appear(1000, 100);
 }
-
 
 export function createPieChart(root, data) {
   const chart = root.container.children.push(

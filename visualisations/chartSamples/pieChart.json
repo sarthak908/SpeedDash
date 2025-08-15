@@ -1,26 +1,22 @@
 [
-  {
-    "category": "Chrome",
-    "value": 65.2
-  },
-  {
-    "category": "Safari",
-    "value": 18.9
-  },
-  {
-    "category": "Edge",
-    "value": 5.4
-  },
-  {
-    "category": "Firefox",
-    "value": 3.1
-  },
-  {
-    "category": "Samsung Internet",
-    "value": 2.8
-  },
-  {
-    "category": "Other",
-    "value": 4.6
-  }
+    { "category": "Marketing", "value": 35 },
+    { "category": "Sales", "value": 25 },
+    { "category": "Development", "value": 20 },
+    { "category": "HR", "value": 10 },
+    { "category": "Support", "value": 5 },
+    { "category": "Operations", "value": 5 },
+    { "category": "Finance", "value": 18 },
+    { "category": "Legal", "value": 12 },
+    { "category": "Research", "value": 22 },
+    { "category": "IT", "value": 30 },
+    { "category": "Procurement", "value": 15 },
+    { "category": "Logistics", "value": 20 },
+    { "category": "Training", "value": 8 },
+    { "category": "Quality", "value": 10 },
+    { "category": "Customer Success", "value": 14 },
+    { "category": "PR", "value": 9 },
+    { "category": "Analytics", "value": 17 },
+    { "category": "Design", "value": 13 },
+    { "category": "Strategy", "value": 16 },
+    { "category": "Administration", "value": 11 }
 ]
