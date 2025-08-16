@@ -10,13 +10,5 @@
     { "category": "Research", "value": 22 },
     { "category": "IT", "value": 30 },
     { "category": "Procurement", "value": 15 },
-    { "category": "Logistics", "value": 20 },
-    { "category": "Training", "value": 8 },
-    { "category": "Quality", "value": 10 },
-    { "category": "Customer Success", "value": 14 },
-    { "category": "PR", "value": 9 },
-    { "category": "Analytics", "value": 17 },
-    { "category": "Design", "value": 13 },
-    { "category": "Strategy", "value": 16 },
-    { "category": "Administration", "value": 11 }
+    { "category": "Logistics", "value": 20 }
 ]

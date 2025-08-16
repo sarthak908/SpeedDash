@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Charts Dashboard</title>
+  
+  <!-- amCharts core + modules -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+  
+  <!-- amCharts themes -->
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Dark.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Material.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Kelly.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Moonrise.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Spirited.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Frozen.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Dataviz.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Micro.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Blue.js"></script>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      color: #2c3e50;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 20px 0;
+    }
+    
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #2c3e50;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    header p {
+      font-size: 1.1rem;
+      color: #7f8c8d;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .dashboard {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+    
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 20px;
+      background: #f8f9fb;
+      border-bottom: 1px solid #eef1f5;
+    }
+    
+    .control-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin: 5px 0;
+    }
+    
+    .control-item {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #5a6a7e;
+    }
+    
+    select {
+      padding: 10px 15px;
+      border: 1px solid #dce3eb;
+      border-radius: 8px;
+      background: white;
+      font-size: 0.95rem;
+      color: #2c3e50;
+      min-width: 180px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    select:hover {
+      border-color: #a0b0c0;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+    }
+    
+    select:focus {
+      outline: none;
+      border-color: #4a90e2;
+      box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+    }
+    
+    #chartdiv {
+      width: 100%;
+      height: 520px;
+      padding: 20px;
+    }
+    
+    .err {
+      padding: 20px;
+      background: #ffebee;
+      border-radius: 8px;
+      color: #b00020;
+      margin: 20px;
+      font-weight: 500;
+    }
+    
+    .theme-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 0 20px;
+    }
+    
+    .theme-item {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.2s;
+    }
+    
+    .theme-item:hover {
+      transform: scale(1.1);
+    }
+    
+    .theme-item.active {
+      border-color: #2c3e50;
+      transform: scale(1.15);
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      padding: 20px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Interactive Charts Dashboard</h1>
+      <p>Explore different visualization types and themes with this interactive dashboard. Switch between charts and themes to see how data can be presented in various ways.</p>
+    </header>
+    
+    <div class="dashboard">
+      <div class="controls">
+        <div class="control-group">
+          <div class="control-item">
+            <label for="chartSelect">Chart Type:</label>
+            <select id="chartSelect">
+              <option value="bar">Bar Chart</option>
+              <option value="line">Line Chart</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+          </div>
+          
+          <div class="control-item">
+            <label for="themeSelect">Theme:</label>
+            <select id="themeSelect">
+              <option value="Animated">Animated (default)</option>
+              <option value="Dark">Dark</option>
+              <option value="Material">Material</option>
+              <option value="Kelly">Kelly</option>
+              <option value="Moonrise">Moonrise</option>
+              <option value="Spirited">Spirited</option>
+              <option value="Frozen">Frozen</option>
+              <option value="Dataviz">Dataviz</option>
+              <option value="Micro">Micro</option>
+              <option value="Blue">Blue</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div id="chartdiv"></div>
+    </div>
+    
+    <div class="theme-preview" id="themePreview"></div>
+    
+    <footer>
+      <p>Interactive Charts Dashboard &copy; 2023 | Built with amCharts 5</p>
+    </footer>
+  </div>
+
+  <script>
+    // ===== THEMES =====
+    function getThemeFactory(name) {
+      if (!name || name.toLowerCase() === "animated") return null;
+
+      switch (name.toLowerCase()) {
+        case "dark":
+          return (root) => am5themes_Dark.new(root);
+        case "material":
+          return (root) => am5themes_Material.new(root);
+        case "kelly":
+          return (root) => am5themes_Kelly.new(root);
+        case "moonrise":
+          return (root) => am5themes_Moonrise.new(root);
+        case "spirited":
+          return (root) => am5themes_Spirited.new(root);
+        case "frozen":
+          return (root) => am5themes_Frozen.new(root);
+        case "dataviz":
+          return (root) => am5themes_Dataviz.new(root);
+        case "micro":
+          return (root) => am5themes_Micro.new(root);
+        case "blue":
+          return (root) => am5themes_Blue.new(root);
+        default:
+          return null;
+      }
+    }
+
+    // ===== Safe Theme Application =====
+    function applyThemes(root, themeFactory) {
+      // Always include Animated as baseline
+      const themeInstances = [am5themes_Animated.new(root)];
+      
+      if (themeFactory && typeof themeFactory === "function") {
+        try {
+          const t = themeFactory(root);
+          if (t) themeInstances.push(t);
+        } catch (e) {
+          console.warn("Theme factory threw:", e);
+        }
+      }
+      
+      root.setThemes(themeInstances);
+
+      // Set appropriate text color based on known dark theme names
+      const darkThemes = ['dark', 'moonrise', 'frozen'];
+      let isDarkTheme = false;
+      
+      // Get theme name from function string representation
+      if (themeFactory && themeFactory.toString) {
+        const fnString = themeFactory.toString();
+        const themeMatch = fnString.match(/am5themes_(\w+)\.new/);
+        if (themeMatch && themeMatch[1]) {
+          const themeName = themeMatch[1].toLowerCase();
+          isDarkTheme = darkThemes.includes(themeName);
+        }
+      }
+      
+      root.interfaceColors.setAll({
+        text: am5.color(isDarkTheme ? 0xFFFFFF : 0x000000)
+      });
+    }
+
+    // ===== CHART HELPERS =====
+    // Bar Chart
+    function createBarChart(root, data, themeFactory) {
+      applyThemes(root, themeFactory);
+
+      const chart = root.container.children.push(
+        am5xy.XYChart.new(root, {
+          panX: true,
+          panY: true,
+          wheelX: "panX",
+          wheelY: "zoomX",
+          pinchZoomX: true,
+        })
+      );
+
+      const cursor = chart.set("cursor", am5xy.XYCursor.new(root, {}));
+
+      const xAxis = chart.xAxes.push(
+        am5xy.CategoryAxis.new(root, {
+          categoryField: "category",
+          renderer: am5xy.AxisRendererX.new(root, { minGridDistance: 30 }),
+          tooltip: am5.Tooltip.new(root, {}),
+        })
+      );
+
+      const yAxis = chart.yAxes.push(
+        am5xy.ValueAxis.new(root, { 
+          renderer: am5xy.AxisRendererY.new(root, {}) 
+        })
+      );
+
+      const series = chart.series.push(
+        am5xy.ColumnSeries.new(root, {
+          xAxis,
+          yAxis,
+          valueYField: "value",
+          categoryXField: "category",
+          tooltip: am5.Tooltip.new(root, {
+            labelText: "{categoryX}: [bold]{valueY}[/]",
+          }),
+        })
+      );
+
+      series.columns.template.setAll({ 
+        cornerRadiusTL: 5, 
+        cornerRadiusTR: 5,
+        strokeOpacity: 0.7
+      });
+
+      series.columns.template.adapters.add("fill", (fill, target) =>
+        chart.get("colors").getIndex(series.columns.indexOf(target))
+      );
+
+      series.columns.template.states.create("hover", {
+        fillOpacity: 0.7,
+        scale: 1.05,
+        strokeWidth: 2
+      });
+
+      chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
+
+      xAxis.data.setAll(data);
+      series.data.setAll(data);
+
+      series.appear(500);
+      chart.appear(500, 100);
+    }
+
+    // Line Chart
+    function createLineChart(root, data, themeFactory) {
+      applyThemes(root, themeFactory);
+
+      const chart = root.container.children.push(
+        am5xy.XYChart.new(root, {
+          panX: true,
+          panY: true,
+          wheelX: "panX",
+          wheelY: "zoomX",
+          pinchZoomX: true,
+        })
+      );
+
+      chart.set("scrollbarX", am5.Scrollbar.new(root, { orientation: "horizontal" }));
+
+      const xAxis = chart.xAxes.push(
+        am5xy.CategoryAxis.new(root, {
+          categoryField: "category",
+          renderer: am5xy.AxisRendererX.new(root, { minGridDistance: 50 }),
+          tooltip: am5.Tooltip.new(root, {}),
+        })
+      );
+
+      const yAxis = chart.yAxes.push(
+        am5xy.ValueAxis.new(root, { 
+          renderer: am5xy.AxisRendererY.new(root, {}) 
+        })
+      );
+
+      const cursor = chart.set(
+        "cursor",
+        am5xy.XYCursor.new(root, { behavior: "zoomX", xAxis })
+      );
+
+      const series = chart.series.push(
+        am5xy.LineSeries.new(root, {
+          name: "Series",
+          xAxis,
+          yAxis,
+          valueYField: "value",
+          categoryXField: "category",
+          tooltip: am5.Tooltip.new(root, {
+            labelText: "[bold]{name}[/]\n{categoryX}: {valueY}",
+          }),
+          strokeWidth: 3,
+          fill: am5.color(0x297373),
+          fillOpacity: 0.2
+        })
+      );
+
+      series.bullets.push(function () {
+        const circle = am5.Circle.new(root, {
+          radius: 5,
+          fill: series.get("fill"),
+          stroke: root.interfaceColors.get("background"),
+          strokeWidth: 2,
+        });
+        circle.states.create("hover", { scale: 1.5 });
+        return am5.Bullet.new(root, { sprite: circle });
+      });
+
+      const legend = chart.children.push(
+        am5.Legend.new(root, { centerX: am5.p50, x: am5.p50, marginTop: 15 })
+      );
+      legend.data.setAll(chart.series.values);
+
+      // Apply text color to legend
+      legend.labels.template.setAll({
+        fill: root.interfaceColors.get("text")
+      });
+
+      xAxis.data.setAll(data);
+      series.data.setAll(data);
+
+      series.appear(1000);
+      chart.appear(1000, 100);
+    }
+
+    // Pie Chart
+    function createPieChart(root, data, themeFactory) {
+      applyThemes(root, themeFactory);
+
+      const chart = root.container.children.push(
+        am5percent.PieChart.new(root, {
+          layout: root.verticalLayout,
+          innerRadius: am5.percent(50),
+        })
+      );
+
+      const series = chart.series.push(
+        am5percent.PieSeries.new(root, {
+          valueField: "value",
+          categoryField: "category",
+          alignLabels: true,
+          strokeWidth: 2,
+          strokeOpacity: 0.8
+        })
+      );
+
+      series.slices.template.setAll({
+        tooltipText: "{category}: [bold]{value} ({valuePercentTotal.formatNumber('0.0')}%)[/]",
+        toggleKey: "active",
+        stroke: root.interfaceColors.get("background"),
+        strokeWidth: 2
+      });
+
+      series.slices.template.states.create("hover", { 
+        scale: 1.05,
+        strokeWidth: 3
+      });
+
+      // Use theme text color
+      const textColor = root.interfaceColors.get("text");
+      
+      series.labels.template.setAll({
+        radius: 10,
+        text: "{category}: {valuePercentTotal.formatNumber('0.0')}%",
+        fill: textColor
+      });
+
+      series.ticks.template.setAll({ 
+        forceHidden: false,
+        stroke: textColor
+      });
+
+      series.data.setAll(data);
+
+      const total = data.reduce((acc, item) => acc + item.value, 0);
+      const totalLabel = am5.Label.new(root, {
+        text: `Total\n[bold]${total.toLocaleString()}[/]`,
+        fontSize: 20,
+        textAlign: "center",
+        centerX: am5.p50,
+        centerY: am5.p50,
+        fill: textColor
+      });
+      chart.seriesContainer.children.push(totalLabel);
+
+      const legend = chart.children.push(
+        am5.Legend.new(root, { centerX: am5.p50, x: am5.p50, marginTop: 15 })
+      );
+      
+      // Apply text color to legend
+      legend.labels.template.setAll({
+        fill: textColor
+      });
+      
+      legend.data.setAll(series.dataItems);
+
+      series.appear(1000, 100);
+    }
+
+    // ===== MAIN APP =====
+    // Sample data for charts
+    const sampleData = {
+      bar: [
+        { category: "Technology", value: 120 },
+        { category: "Healthcare", value: 98 },
+        { category: "Finance", value: 85 },
+        { category: "Retail", value: 65 },
+        { category: "Energy", value: 45 },
+        { category: "Education", value: 78 },
+        { category: "Manufacturing", value: 55 },
+      ],
+      line: [
+        { category: "Jan", value: 65 },
+        { category: "Feb", value: 59 },
+        { category: "Mar", value: 80 },
+        { category: "Apr", value: 81 },
+        { category: "May", value: 56 },
+        { category: "Jun", value: 55 },
+        { category: "Jul", value: 40 },
+        { category: "Aug", value: 62 },
+        { category: "Sep", value: 75 },
+        { category: "Oct", value: 82 },
+        { category: "Nov", value: 91 },
+        { category: "Dec", value: 95 },
+      ],
+      pie: [
+        { category: "Mobile", value: 35 },
+        { category: "Desktop", value: 25 },
+        { category: "Tablet", value: 20 },
+        { category: "Other", value: 10 },
+        { category: "Console", value: 10 },
+      ]
+    };
+
+    // Theme colors for preview
+    const themeColors = {
+      Animated: "#4e79a7",
+      Dark: "#2c3e50",
+      Material: "#42a5f5",
+      Kelly: "#f3a533",
+      Moonrise: "#9b59b6",
+      Spirited: "#e74c3c",
+      Frozen: "#3498db",
+      Dataviz: "#27ae60",
+      Micro: "#7f8c8d",
+      Blue: "#2980b9"
+    };
+
+    let currentRoot = null;
+
+    function disposeRoot() {
+      if (currentRoot) {
+        try { currentRoot.dispose(); } catch (e) { console.warn("dispose failed", e); }
+        currentRoot = null;
+      }
+    }
+
+    function renderChart(type, themeKey) {
+      try {
+        disposeRoot();
+        
+        const data = sampleData[type];
+        if (!data) {
+          throw new Error(`No data available for chart type: ${type}`);
+        }
+        
+        am5.ready(() => {
+          currentRoot = am5.Root.new("chartdiv");
+          
+          const themeFactory = getThemeFactory(themeKey);
+          
+          if (type === "bar") createBarChart(currentRoot, data, themeFactory);
+          else if (type === "line") createLineChart(currentRoot, data, themeFactory);
+          else if (type === "pie") createPieChart(currentRoot, data, themeFactory);
+        });
+      } catch (err) {
+        disposeRoot();
+        document.getElementById("chartdiv").innerHTML =
+          `<div class="err"><b>Error:</b> ${err.message}</div>`;
+        console.error(err);
+      }
+    }
+
+    // Initialize theme preview
+    function initThemePreview() {
+      const container = document.getElementById("themePreview");
+      container.innerHTML = "";
+      
+      Object.entries(themeColors).forEach(([name, color]) => {
+        const el = document.createElement("div");
+        el.className = "theme-item";
+        el.style.backgroundColor = color;
+        el.title = name;
+        el.dataset.theme = name;
+        
+        el.addEventListener("click", () => {
+          document.getElementById("themeSelect").value = name;
+          renderChart(
+            document.getElementById("chartSelect").value,
+            name
+          );
+          
+          // Update active state
+          document.querySelectorAll(".theme-item").forEach(item => {
+            item.classList.remove("active");
+          });
+          el.classList.add("active");
+        });
+        
+        container.appendChild(el);
+      });
+    }
+
+    // Initialize the app
+    document.addEventListener("DOMContentLoaded", () => {
+      const chartSelect = document.getElementById("chartSelect");
+      const themeSelect = document.getElementById("themeSelect");
+      
+      const load = () => renderChart(chartSelect.value, themeSelect.value);
+      
+      chartSelect.addEventListener("change", load);
+      themeSelect.addEventListener("change", load);
+      
+      // Initialize theme preview
+      initThemePreview();
+      
+      // Initial load (bar, default)
+      load();
+    });
+  </script>
+</body>
+</html>

@@ -1,10 +1,219 @@
+/* Enhanced CSS for Professional Chart Dashboard */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+  color: #2c3e50;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+header h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #2c3e50;
+  background: linear-gradient(90deg, #3498db, #2c3e50);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+header p {
+  font-size: 1.1rem;
+  color: #7f8c8d;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.controls {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.control-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.control-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 250px;
+}
+
+label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #5a6a7e;
+  display: block;
+}
+
+select {
+  padding: 12px 16px;
+  border: 1px solid #dce3eb;
+  border-radius: 8px;
+  background: white;
+  font-size: 1rem;
+  color: #2c3e50;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+select:hover {
+  border-color: #a0b0c0;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+}
+
+select:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+/* CHART CONTAINER ENHANCEMENTS */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 650px; /* Increased height for better visibility */
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
 #chartdiv {
-    width: 100%;
+  flex: 1;
+  width: 100%;
+  min-height: 550px; /* More space for chart */
+}
+
+/* --- CORRECTED AND SAFER CHART STYLES --- */
+
+/* SAFER LABEL STYLING */
+/* This CSS styles the look of the labels without breaking their position. */
+.am5-PieSeries-label > .am5-Label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  /* Adds a subtle shadow to make text readable over chart lines */
+  text-shadow: 0 0 5px white, 0 0 5px white; 
+  fill: #2c3e50; /* Text color */
+  padding: 3px 6px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+}
+
+/* Optional: Style the connecting lines */
+.am5-PieSeries-tick {
+  stroke: #5a6a7e;
+  stroke-width: 1px;
+  stroke-opacity: 0.7;
+}
+
+/* LEGEND STYLES */
+/* Note: Using amCharts JS settings for legend is often more reliable than CSS */
+.am5-Legend-label {
+  font-size: 0.85rem !important;
+  font-weight: 500;
+  color: #2c3e50 !important;
+}
+
+.am5-Legend-marker {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 2px !important;
+}
+
+/* SLICE ANIMATION & HOVER EFFECTS */
+.am5-Slice {
+  transition: transform 0.3s ease, fill-opacity 0.3s ease;
+}
+
+/* Tooltip appearance */
+.am5-Tooltip {
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+  font-size: 14px !important;
+  padding: 8px 12px !important;
+  background-color: #ffffff !important;
+  border: 1px solid #dce3eb !important;
+}
+
+/* RESPONSIVE ADJUSTMENTS */
+@media (max-width: 768px) {
+  .control-group {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .control-item {
+    min-width: 100%;
+  }
+  
+  .chart-container {
+    height: 550px;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+  }
+  
+  /* Improve chart labels on mobile */
+  .am5-PieSeries-label > .am5-Label {
+    font-size: 0.75rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-container {
     height: 500px;
-    margin: auto;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  header p {
+    font-size: 1rem;
+  }
+  
+  .am5-Legend-label {
+    font-size: 0.7rem !important;
+  }
 }

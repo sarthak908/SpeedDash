@@ -2,44 +2,156 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>amCharts Dynamic Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Professional Chart Dashboard</title>
 
+    <!-- amCharts core + modules -->
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
-    <style>
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
-        padding: 20px;
-        background-color: #f4f4f9;
-      }
-      #controls {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      #chartdiv {
-        width: 100%;
-        height: 500px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #fff;
-      }
-    </style>
+    <!-- Professional themes -->
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Material.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Dataviz.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Kelly.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Moonrise.js"></script>
+
+    <!-- Custom professional themes -->
+    <script>
+      // Business Theme (clean, professional)
+      am5.Theme.define(
+        "Business",
+        Object.assign({}, am5themes_Animated.new({}), {
+          baseTheme: am5themes_Animated,
+          colors: {
+            primary: am5.color("#2c3e50"),
+            secondary: am5.color("#3498db"),
+            accent: am5.color("#e74c3c"),
+          },
+        })
+      );
+
+      // Educational Theme (clear, accessible)
+      am5.Theme.define(
+        "Educational",
+        Object.assign({}, am5themes_Animated.new({}), {
+          baseTheme: am5themes_Animated,
+          colors: {
+            primary: am5.color("#2980b9"),
+            secondary: am5.color("#27ae60"),
+            accent: am5.color("#f39c12"),
+            alternative: am5.color("#8e44ad"),
+          },
+        })
+      );
+    </script>
+
+    <link rel="stylesheet" href="chartStyle.css" />
   </head>
   <body>
-    <div id="controls">
-      <label for="chartSelect">Select Chart Type: </label>
-      <select id="chartSelect">
-        <option value="bar">Bar Chart</option>
-        <option value="line">Line Chart</option>
-        <option value="pie">Pie Chart</option>
-      </select>
-    </div>
+    <div class="dashboard-container">
+      <header>
+        <h1>Professional Data Dashboard</h1>
+        <p>
+          Analytical charts for business intelligence and educational insights
+        </p>
+      </header>
 
-    <div id="chartdiv"></div>
+      <div class="controls">
+        <div class="control-group">
+          <div class="control-item">
+            <label for="chartSelect">Chart Type:</label>
+            <select id="chartSelect">
+              <option value="bar">Bar Chart</option>
+              <option value="line">Line Chart</option>
+              <option value="pie">Pie Chart</option>
+            </select>
+          </div>
+
+          <div class="control-item">
+            <label for="themeSelect">Theme:</label>
+            <select id="themeSelect">
+              <option value="Animated">Animated (default)</option>
+              <option value="Material">Material Design</option>
+              <option value="Dataviz">Data Visualization</option>
+              <option value="Kelly">Kelly</option>
+              <option value="Moonrise">Moonrise</option>
+              
+             
+              
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="chartdiv"></div>
+
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Loading chart data...</p>
+      </div>
+
+      <div class="error" id="error" style="display: none">
+        <div class="error-icon">⚠️</div>
+        <p id="error-message"></p>
+      </div>
+
+      <div class="theme-info">
+        <h3>Professional Themes Explained</h3>
+        <div class="theme-grid">
+          <div class="theme-card">
+            <div
+              class="theme-preview"
+              style="
+                background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+              "
+            ></div>
+            <h4>Business Professional</h4>
+            <p>
+              Clean, corporate colors ideal for executive presentations and
+              reports
+            </p>
+          </div>
+          <div class="theme-card">
+            <div
+              class="theme-preview"
+              style="
+                background: linear-gradient(135deg, #2980b9 0%, #27ae60 100%);
+              "
+            ></div>
+            <h4>Educational</h4>
+            <p>
+              High-contrast, accessible colors perfect for classroom and
+              training materials
+            </p>
+          </div>
+          <div class="theme-card">
+            <div
+              class="theme-preview"
+              style="
+                background: linear-gradient(135deg, #42a5f5 0%, #66bb6a 100%);
+              "
+            ></div>
+            <h4>Material Design</h4>
+            <p>Google's design language - clean, modern, and intuitive</p>
+          </div>
+          <div class="theme-card">
+            <div
+              class="theme-preview"
+              style="
+                background: linear-gradient(135deg, #27ae60 0%, #f39c12 100%);
+              "
+            ></div>
+            <h4>Data Visualization</h4>
+            <p>
+              Optimized for clarity and information density in complex charts
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script type="module" src="chart.js"></script>
   </body>
