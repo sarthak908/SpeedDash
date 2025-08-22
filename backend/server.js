@@ -15,16 +15,23 @@ app.set("views", path.join(__dirname, "../views"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // For form submissions
-app.use(express.static(path.join(__dirname, "../public"))); // Serve CSS/JS/images
-app.use("/visualisations", express.static(path.join(__dirname, "../visualisations")));
-
+app.use(express.static(path.join(__dirname, "../frontend/public")));
+app.use(
+  "/visualisations",
+  express.static(path.join(__dirname, "../visualisations"))
+);
 
 // Routes
 app.use("/query", queryRoute);
 app.use("/uploads", express.static("uploads")); // Access uploaded files
 app.use("/api", uploadRoute);
+app.use(express.static(path.join(__dirname, "../public")));
 
-app.get("/login", (req, res) => {
+app.get("/loginpublic", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/public/index.html"));
+});
+
+app.get("/loginejs", (req, res) => {
   res.render("login", { error: null }); // Passing error variable for EJS
 });
 

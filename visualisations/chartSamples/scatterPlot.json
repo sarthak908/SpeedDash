@@ -1,0 +1,16 @@
+[
+  { "series": "Product A", "Sales": 1200, "Profit": 300 },
+  { "series": "Product A", "Sales": 1500, "Profit": 400 },
+  { "series": "Product A", "Sales": 1800, "Profit": 500 },
+  { "series": "Product A", "Sales": 2000, "Profit": 550 },
+
+  { "series": "Product B", "Sales": 1000, "Profit": 200 },
+  { "series": "Product B", "Sales": 1300, "Profit": 350 },
+  { "series": "Product B", "Sales": 1600, "Profit": 450 },
+  { "series": "Product B", "Sales": 1900, "Profit": 500 },
+
+  { "series": "Product C", "Sales": 900, "Profit": 150 },
+  { "series": "Product C", "Sales": 1200, "Profit": 300 },
+  { "series": "Product C", "Sales": 1400, "Profit": 350 },
+  { "series": "Product C", "Sales": 1700, "Profit": 450 }
+]

@@ -1,19 +1,15 @@
 
 
 [
-    { "category": "Marketing", "value": 35 },
-    { "category": "Sales", "value": 25 },
-    { "category": "Development", "value": 20 },
-    { "category": "HR", "value": 10 },
-    { "category": "Support", "value": 5 },
-    { "category": "Operations", "value": 5 },
-    { "category": "Finance", "value": 18 },
-    { "category": "Legal", "value": 12 },
-    { "category": "Research", "value": 22 },
-    { "category": "IT", "value": 30 },
-    { "category": "Procurement", "value": 15 },
-    { "category": "Logistics", "value": 20 },
-    { "category": "Training", "value": 8 },
-    { "category": "Quality", "value": 10 },
-    { "category": "Customer Success", "value": 14 }
+  { "category": "Day 1", "SeriesA": 50, "SeriesB": 70, "SeriesC": 60 },
+  { "category": "Day 2", "SeriesA": 55, "SeriesB": 65, "SeriesC": 62 },
+  { "category": "Day 3", "SeriesA": 60, "SeriesB": 68, "SeriesC": 64 },
+  { "category": "Day 4", "SeriesA": 58, "SeriesB": 72, "SeriesC": 66 },
+  { "category": "Day 5", "SeriesA": 62, "SeriesB": 75, "SeriesC": 68 },
+  { "category": "Day 6", "SeriesA": 65, "SeriesB": 70, "SeriesC": 70 },
+  { "category": "Day 7", "SeriesA": 68, "SeriesB": 73, "SeriesC": 72 },
+  { "category": "Day 8", "SeriesA": 70, "SeriesB": 78, "SeriesC": 74 },
+  { "category": "Day 9", "SeriesA": 72, "SeriesB": 80, "SeriesC": 76 },
+  { "category": "Day 10", "SeriesA": 75, "SeriesB": 85, "SeriesC": 78 }
 ]
+

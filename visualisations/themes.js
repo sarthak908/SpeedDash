@@ -52,7 +52,9 @@ export function getThemeFactory(name) {
       return (root) => am5themes_Micro.new(root);
     case "blue":
       return (root) => am5themes_Blue.new(root);
+    
     default:
+      
       return null;
   }
 }

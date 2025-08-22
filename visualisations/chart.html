@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Professional Chart Dashboard</title>
 
-    <!-- amCharts core + modules -->
+    <!-- AMCharts Core and Modules -->
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 
-    <!-- Professional themes -->
+    <!-- AMCharts Themes -->
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Material.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Dataviz.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Kelly.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Moonrise.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Frozen.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Spirited.js"></script>
 
-    <!-- Custom professional themes -->
+    <!-- Custom Theme Definitions -->
     <script>
       // Business Theme (clean, professional)
       am5.Theme.define(
@@ -48,10 +50,13 @@
       );
     </script>
 
+    <!-- External CSS -->
     <link rel="stylesheet" href="chartStyle.css" />
   </head>
+
   <body>
     <div class="dashboard-container">
+      <!-- Header Section -->
       <header>
         <h1>Professional Data Dashboard</h1>
         <p>
@@ -59,6 +64,7 @@
         </p>
       </header>
 
+      <!-- Controls Section -->
       <div class="controls">
         <div class="control-group">
           <div class="control-item">
@@ -67,6 +73,9 @@
               <option value="bar">Bar Chart</option>
               <option value="line">Line Chart</option>
               <option value="pie">Pie Chart</option>
+              <option value="scatter">Scatter Plot</option>
+              <option value="histogram">Histogram</option>
+              <!-- Added -->
             </select>
           </div>
 
@@ -78,29 +87,33 @@
               <option value="Dataviz">Data Visualization</option>
               <option value="Kelly">Kelly</option>
               <option value="Moonrise">Moonrise</option>
-              
-             
-              
+              <option value="Frozen">Frozen</option>
+              <option value="Spirited">Spirited</option>
             </select>
           </div>
         </div>
       </div>
 
+      <!-- Chart Container -->
       <div id="chartdiv"></div>
 
+      <!-- Loading Section -->
       <div class="loading" id="loading">
         <div class="spinner"></div>
         <p>Loading chart data...</p>
       </div>
 
+      <!-- Error Section -->
       <div class="error" id="error" style="display: none">
         <div class="error-icon">⚠️</div>
         <p id="error-message"></p>
       </div>
 
+      <!-- Theme Information Section -->
       <div class="theme-info">
         <h3>Professional Themes Explained</h3>
         <div class="theme-grid">
+          <!-- Business Professional Theme -->
           <div class="theme-card">
             <div
               class="theme-preview"
@@ -114,6 +127,8 @@
               reports
             </p>
           </div>
+
+          <!-- Educational Theme -->
           <div class="theme-card">
             <div
               class="theme-preview"
@@ -127,6 +142,8 @@
               training materials
             </p>
           </div>
+
+          <!-- Material Design Theme -->
           <div class="theme-card">
             <div
               class="theme-preview"
@@ -137,6 +154,8 @@
             <h4>Material Design</h4>
             <p>Google's design language - clean, modern, and intuitive</p>
           </div>
+
+          <!-- Data Visualization Theme -->
           <div class="theme-card">
             <div
               class="theme-preview"
@@ -153,6 +172,7 @@
       </div>
     </div>
 
+    <!-- Main Chart Script -->
     <script type="module" src="chart.js"></script>
   </body>
 </html>
