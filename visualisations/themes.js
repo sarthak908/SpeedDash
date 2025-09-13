@@ -31,9 +31,11 @@
 // Returns a factory function (root) => themeInstance, or null to use default Animated only.
 
 export function getThemeFactory(name) {
-  if (!name || name.toLowerCase() === "animated") return null;
+  const key = String(name || "animated").toLowerCase();
 
-  switch (name.toLowerCase()) {
+  if (key === "animated") return null;
+
+  switch (key) {
     case "dark":
       return (root) => am5themes_Dark.new(root);
     case "material":
@@ -52,9 +54,7 @@ export function getThemeFactory(name) {
       return (root) => am5themes_Micro.new(root);
     case "blue":
       return (root) => am5themes_Blue.new(root);
-    
     default:
-      
       return null;
   }
 }

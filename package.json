@@ -18,7 +18,9 @@
   "homepage": "https://github.com/sarthak908/SpeedDash#readme",
   "description": "",
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "dotenv": "^17.2.1",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "openai": "^5.20.2"
   }
 }

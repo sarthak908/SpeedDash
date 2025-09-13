@@ -1,15 +1,12 @@
-
-
 [
-  { "category": "Day 1", "SeriesA": 50, "SeriesB": 70, "SeriesC": 60 },
-  { "category": "Day 2", "SeriesA": 55, "SeriesB": 65, "SeriesC": 62 },
-  { "category": "Day 3", "SeriesA": 60, "SeriesB": 68, "SeriesC": 64 },
-  { "category": "Day 4", "SeriesA": 58, "SeriesB": 72, "SeriesC": 66 },
-  { "category": "Day 5", "SeriesA": 62, "SeriesB": 75, "SeriesC": 68 },
-  { "category": "Day 6", "SeriesA": 65, "SeriesB": 70, "SeriesC": 70 },
-  { "category": "Day 7", "SeriesA": 68, "SeriesB": 73, "SeriesC": 72 },
-  { "category": "Day 8", "SeriesA": 70, "SeriesB": 78, "SeriesC": 74 },
-  { "category": "Day 9", "SeriesA": 72, "SeriesB": 80, "SeriesC": 76 },
-  { "category": "Day 10", "SeriesA": 75, "SeriesB": 85, "SeriesC": 78 }
+  {"category": "Customer 1", "value": 4500},
+  {"category": "Customer 2", "value": 3200},
+  {"category": "Customer 3", "value": 6700},
+  {"category": "Customer 4", "value": 2100},
+  {"category": "Customer 5", "value": 8900},
+  {"category": "Customer 6", "value": 5400},
+  {"category": "Customer 7", "value": 7600},
+  {"category": "Customer 8", "value": 3800},
+  {"category": "Customer 9", "value": 5000},
+  {"category": "Customer 10", "value": 6300}
 ]
-

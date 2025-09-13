@@ -1,178 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Professional Chart Dashboard</title>
+    <title>SpeedDash | Dynamic Charts</title>
+    <link rel="stylesheet" href="chartStyle.css" />
 
-    <!-- AMCharts Core and Modules -->
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 
-    <!-- AMCharts Themes -->
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Material.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Dataviz.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Responsive.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Kelly.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Moonrise.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Frozen.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Spirited.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Frozen.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Dataviz.js"></script>
+   
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>SpeedDash 🚀</h1>
+            <p>Generate charts from your SQL data using natural language.</p>
+        </header>
 
-    <!-- Custom Theme Definitions -->
-    <script>
-      // Business Theme (clean, professional)
-      am5.Theme.define(
-        "Business",
-        Object.assign({}, am5themes_Animated.new({}), {
-          baseTheme: am5themes_Animated,
-          colors: {
-            primary: am5.color("#2c3e50"),
-            secondary: am5.color("#3498db"),
-            accent: am5.color("#e74c3c"),
-          },
-        })
-      );
+        <div class="controls">
+            <div class="control-group">
+                <label for="sqlFileInput">1. Upload your .sql file:</label>
+                <input type="file" id="sqlFileInput" accept=".sql" />
+            </div>
 
-      // Educational Theme (clear, accessible)
-      am5.Theme.define(
-        "Educational",
-        Object.assign({}, am5themes_Animated.new({}), {
-          baseTheme: am5themes_Animated,
-          colors: {
-            primary: am5.color("#2980b9"),
-            secondary: am5.color("#27ae60"),
-            accent: am5.color("#f39c12"),
-            alternative: am5.color("#8e44ad"),
-          },
-        })
-      );
-    </script>
+            <div class="control-group">
+                <label for="userQueryInput">2. Describe the chart you want:</label>
+                <input type="text" id="userQueryInput" placeholder="e.g., Bar chart of products by sales" />
+            </div>
 
-    <!-- External CSS -->
-    <link rel="stylesheet" href="chartStyle.css" />
-  </head>
+            <div class="control-group">
+                <label for="themeSelect">3. Select Theme:</label>
+                <select id="themeSelect">
+                    <option value="animated">Animated (Default)</option>
+                   
+                    <option value="material">Material</option>
+                    <option value="kelly">Kelly</option>
+                    <option value="moonrise">Moonrise</option>
+                    <option value="spirited">Spirited</option>
+                    <option value="frozen">Frozen</option>
+                    <option value="dataviz">Dataviz</option>
+                  
+                </select>
+            </div>
 
-  <body>
-    <div class="dashboard-container">
-      <!-- Header Section -->
-      <header>
-        <h1>Professional Data Dashboard</h1>
-        <p>
-          Analytical charts for business intelligence and educational insights
-        </p>
-      </header>
-
-      <!-- Controls Section -->
-      <div class="controls">
-        <div class="control-group">
-          <div class="control-item">
-            <label for="chartSelect">Chart Type:</label>
-            <select id="chartSelect">
-              <option value="bar">Bar Chart</option>
-              <option value="line">Line Chart</option>
-              <option value="pie">Pie Chart</option>
-              <option value="scatter">Scatter Plot</option>
-              <option value="histogram">Histogram</option>
-              <!-- Added -->
-            </select>
-          </div>
-
-          <div class="control-item">
-            <label for="themeSelect">Theme:</label>
-            <select id="themeSelect">
-              <option value="Animated">Animated (default)</option>
-              <option value="Material">Material Design</option>
-              <option value="Dataviz">Data Visualization</option>
-              <option value="Kelly">Kelly</option>
-              <option value="Moonrise">Moonrise</option>
-              <option value="Frozen">Frozen</option>
-              <option value="Spirited">Spirited</option>
-            </select>
-          </div>
+            <div class="control-group">
+                <button id="generateChartBtn">Generate Chart</button>
+            </div>
         </div>
-      </div>
 
-      <!-- Chart Container -->
-      <div id="chartdiv"></div>
-
-      <!-- Loading Section -->
-      <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <p>Loading chart data...</p>
-      </div>
-
-      <!-- Error Section -->
-      <div class="error" id="error" style="display: none">
-        <div class="error-icon">⚠️</div>
-        <p id="error-message"></p>
-      </div>
-
-      <!-- Theme Information Section -->
-      <div class="theme-info">
-        <h3>Professional Themes Explained</h3>
-        <div class="theme-grid">
-          <!-- Business Professional Theme -->
-          <div class="theme-card">
-            <div
-              class="theme-preview"
-              style="
-                background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-              "
-            ></div>
-            <h4>Business Professional</h4>
-            <p>
-              Clean, corporate colors ideal for executive presentations and
-              reports
-            </p>
-          </div>
-
-          <!-- Educational Theme -->
-          <div class="theme-card">
-            <div
-              class="theme-preview"
-              style="
-                background: linear-gradient(135deg, #2980b9 0%, #27ae60 100%);
-              "
-            ></div>
-            <h4>Educational</h4>
-            <p>
-              High-contrast, accessible colors perfect for classroom and
-              training materials
-            </p>
-          </div>
-
-          <!-- Material Design Theme -->
-          <div class="theme-card">
-            <div
-              class="theme-preview"
-              style="
-                background: linear-gradient(135deg, #42a5f5 0%, #66bb6a 100%);
-              "
-            ></div>
-            <h4>Material Design</h4>
-            <p>Google's design language - clean, modern, and intuitive</p>
-          </div>
-
-          <!-- Data Visualization Theme -->
-          <div class="theme-card">
-            <div
-              class="theme-preview"
-              style="
-                background: linear-gradient(135deg, #27ae60 0%, #f39c12 100%);
-              "
-            ></div>
-            <h4>Data Visualization</h4>
-            <p>
-              Optimized for clarity and information density in complex charts
-            </p>
-          </div>
-        </div>
-      </div>
+        <main>
+            <div id="loading" style="display: none;">Loading...</div>
+            <div id="error" style="display: none;">
+                <p>Error: <span id="error-message"></span></p>
+            </div>
+            <div id="chartdiv" style="width: 100%; height: 500px;"></div>
+        </main>
     </div>
 
-    <!-- Main Chart Script -->
     <script type="module" src="chart.js"></script>
-  </body>
+</body>
 </html>
